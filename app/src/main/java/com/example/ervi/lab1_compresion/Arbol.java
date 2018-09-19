@@ -29,8 +29,8 @@ public class Arbol {
 
     private void Ordenar(){
         for (int i=0; i<nodos.size()-1; i++){
-            for(int j=i+1; j<nodos.size();i++){
-                if(nodos.get(j).getValor()<nodos.get(i).getValor()){
+            for(int j=i+1; j<nodos.size();j++){
+                if(nodos.get(j).getValor() <  nodos.get(i).getValor()){
                     Nodo aux = new Nodo();
                     aux = nodos.get(i);
                     nodos.set(i,nodos.get(j));
@@ -50,9 +50,38 @@ public class Arbol {
             nuevo.setRight(nodos.get(1));
             nodos.get(0).setFather(nuevo);
             nodos.get(1).setFather(nuevo);
+            nodos.add(nuevo);
             nodos.remove(0);
-            nodos.remove(1);
+            nodos.remove(0);
+        }
+        LlenarValorCaracter(nodos.get(0), "");
+
+    }
+
+    //DANILO: contruye la tabla con el código prefijo de cada caracter
+
+    private void LlenarValorCaracter(Nodo actual, String cadena){
+        if (actual.getLeft() == null && actual.getRight() == null){
+            valorCracter.put(actual.getLlave(), cadena);
+        }
+        else{
+            LlenarValorCaracter(actual.getLeft(), cadena + "0");
+            LlenarValorCaracter(actual.getRight(),cadena + "1");
         }
     }
 
+
+
+
+    //DANILO: escribe el texto del archivo en un arreglo de 1s y 0s para posteriormente convertirlos a decimal y luego a su equivalente a caracter
+    //Recibe el texto total del archivo
+
+    public String TextoEnBits(String original) {
+        StringBuilder textoNuevo = new StringBuilder();
+
+        //LEER EL TEXTO ORIGINAL LETRA POR LETRA, LLAMAR A LA LLAVE CORRESPONDIENTE DICCIONARIO ValorCracter
+        //Y ESCRIBIR EL VALOR COORESPONDIENTE
+
+      return textoNuevo.toString();
+    }
 }

@@ -37,6 +37,7 @@ public class CaracteresArchivo {
 
         arbol.AgregarListaNodo(caracteres);
         arbol.EstructurarArbol();
+
     }
 
 }
