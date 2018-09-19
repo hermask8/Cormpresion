@@ -6,9 +6,10 @@ import java.util.List;
 
 public class CaracteresArchivo {
 
-    private List<Caracter> caracteres = new ArrayList<>();
+    private static List<Caracter> caracteres = new ArrayList<>();
+    private static Arbol arbol = new Arbol();
 
-    private void SepararLinea(String texto)
+    public void SepararLinea(String texto)
     {
         for (int i=0;i<texto.length();i++)
         {
@@ -19,18 +20,23 @@ public class CaracteresArchivo {
             boolean contiene = true;
             for (Caracter dato:caracteres)
             {
-                if (dato.getValorCaracter().equals(miCaracter)==true)
+                if (dato.getValorCaracter().equals(miCaracter.getValorCaracter())==true)
                 {
                     int conteo = dato.getConteo() + 1 ;
                     dato.setConteo(conteo);
+                    contiene = false;
                 }
-                contiene = false;
+
             }
-            if (contiene==false)
+            if (contiene==true)
             {
                 caracteres.add(miCaracter);
                 contiene=true;
             }
         }
+
+        arbol.AgregarListaNodo(caracteres);
+        arbol.EstructurarArbol();
     }
+
 }

@@ -8,9 +8,29 @@ public class Nodo {
     Nodo right;
     Nodo left;
 
+    public String getLlave (){
+        return this.llave;
+    }
+
+    public void setLlave(String llave){
+        this.llave = llave;
+    }
+
+    public int getValor(){
+        return this.valor;
+    }
+
+    public void setValor(int valor){
+        this.valor = valor;
+    }
+
     public Nodo(String llave, int valor){
         this.llave = llave;
         this.valor = valor;
+    }
+
+    public Nodo(){
+
     }
 
     public Nodo getFather() {
