@@ -1,6 +1,9 @@
 package com.example.ervi.lab1_compresion;
 
+import android.renderscript.Sampler;
+
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -81,6 +84,22 @@ public class Arbol {
 
         //LEER EL TEXTO ORIGINAL LETRA POR LETRA, LLAMAR A LA LLAVE CORRESPONDIENTE DICCIONARIO ValorCracter
         //Y ESCRIBIR EL VALOR COORESPONDIENTE
+
+
+        
+        for (int i=0;i<original.length();i++)
+        {
+            char letra = original.charAt(i);
+
+            for (Hashtable.Entry<String,String> entry:valorCracter.entrySet())
+            {
+                String letra2 = Character.toString(letra);
+                if (letra2.equals(entry.getKey())==true)
+                {
+                    textoNuevo.append(entry.getValue());
+                }
+            }
+        }
 
       return textoNuevo.toString();
     }
