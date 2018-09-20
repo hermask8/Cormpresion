@@ -1,14 +1,18 @@
 package com.example.ervi.lab1_compresion;
 
 
+import java.security.PublicKey;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 public class CaracteresArchivo {
 
     private static List<Caracter> caracteres = new ArrayList<>();
     private static Arbol arbol = new Arbol();
-
+    public String pasarAscii;
+    public String descomprimir;
+    public String binarioVentana;
     public void SepararLinea(String texto)
     {
         for (int i=0;i<texto.length();i++)
@@ -39,6 +43,7 @@ public class CaracteresArchivo {
         arbol.AgregarListaNodo(caracteres);
         arbol.EstructurarArbol();
         String copiar = arbol.TextoEnBits(texto);
+        binarioVentana=copiar;
         String textoSeparar = binarioByte(copiar);
         String[] separar = textoSeparar.split("-");
         for (int j=0;j<separar.length;j++)
@@ -65,7 +70,61 @@ public class CaracteresArchivo {
         for (int l =0; l<decimal.length;l++)
         {
             ascii.append(ConvertirAscii(Integer.parseInt(decimal[l])));
+            ascii.append(",");
+
         }
+
+        pasarAscii= ascii.toString();
+
+        StringBuilder asciiDesimal2 = new StringBuilder();
+        String[] asciiDecimal = ascii.toString().split(",");
+        for (int l =0; l<asciiDecimal.length;l++)
+        {
+            int convertido = (int) asciiDecimal[l].charAt(0);
+            asciiDesimal2.append(convertido);
+            asciiDesimal2.append(",");
+
+        }
+
+        StringBuilder decimalBinario = new StringBuilder();
+        String[] decimalbina = asciiDesimal2.toString().split(",");
+        for (int l =0; l<decimalbina.length;l++)
+        {
+            decimalBinario.append(Integer.toBinaryString(Integer.parseInt(decimalbina[l])));
+
+        }
+        String binario2 = decimalBinario.toString();
+        StringBuilder binarioCAracter = new StringBuilder();
+        String letra2= "";
+
+        for (int i=0;i<binario2.length();i++)
+        {
+            char letra = binario2.charAt(i);
+            boolean bandera = false;
+            if (letra2.equals("")==true)
+            {
+                letra2 = Character.toString(letra);
+                bandera=true;
+            }
+            if (bandera==false&&letra2.equals("")==false)
+            {
+                letra2 = letra2 + Character.toString(letra);
+            }
+            for (Hashtable.Entry<String,String> entry:arbol.getValorCracter().entrySet())
+            {
+
+                if (letra2.equals(entry.getValue())==true)
+                {
+                    binarioCAracter.append(entry.getKey());
+                    letra2 ="";
+                    bandera = true;
+                }
+
+            }
+
+
+        }
+        descomprimir = binarioCAracter.toString();
 
     }
     public char ConvertirAscii(int leido){
@@ -116,36 +175,42 @@ public class CaracteresArchivo {
         int exponente;
         boolean esBinario;
 
-        //Leer un número por teclado y comprobar que es binario
+
         do {
             numero = Long.parseLong(binario);
-            //comprobamos que sea un número binario es decir
-            //que este formado solo por ceros y unos
             esBinario = true;
             aux = numero;
             while (aux != 0) {
-                digito = aux % 10; //última cifra del números
-                if (digito != 0 && digito != 1) { //si no es 0 ó 1
-                    esBinario = false; //no es un número binario
+                digito = aux % 10;
+                if (digito != 0 && digito != 1) {
+                    esBinario = false;
                 }
-                aux = aux / 10; //quitamos la última cifra para repetir el proceso
+                aux = aux / 10;
             }
-        } while (!esBinario); //se vuelve a pedir si no es binario
+        } while (!esBinario);
 
-        //proceso para pasar de binario a decimal
+
         exponente = 0;
-        decimal = 0; //será el equivalente en base decimal
+        decimal = 0;
         while (numero != 0) {
-            //se toma la última cifra
+
             digito = numero % 10;
-            //se multiplica por la potencia de 2 correspondiente y se suma al número
             decimal = decimal + digito * (int) Math.pow(2, exponente);
-            //se aumenta el exponente
             exponente++;
-            //se quita la última cifra para repetir el proceso
             numero = numero / 10;
         }
         return decimal;
     }
 
+    public String getDescomprimir() {
+        return descomprimir;
+    }
+
+    public String getPasarAscii() {
+        return pasarAscii;
+    }
+
+    public String getBinarioVentana() {
+        return binarioVentana;
+    }
 }

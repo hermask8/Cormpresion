@@ -103,4 +103,8 @@ public class Arbol {
 
       return textoNuevo.toString();
     }
+
+    public Hashtable<String, String> getValorCracter() {
+        return valorCracter;
+    }
 }
