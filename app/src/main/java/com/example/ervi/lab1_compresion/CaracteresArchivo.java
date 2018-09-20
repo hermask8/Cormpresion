@@ -13,52 +13,42 @@ public class CaracteresArchivo {
     public String pasarAscii;
     public String descomprimir;
     public String binarioVentana;
-    public void SepararLinea(String texto)
-    {
-        for (int i=0;i<texto.length();i++)
-        {
+
+    public void SepararLinea(String texto) {
+        for (int i = 0; i < texto.length(); i++) {
             char letra = texto.charAt(i);
             Caracter miCaracter = new Caracter();
             miCaracter.setValorCaracter(letra);
             miCaracter.setConteo(1);
             boolean contiene = true;
-            for (Caracter dato:caracteres)
-            {
-                if (dato.getValorCaracter().equals(miCaracter.getValorCaracter())==true)
-                {
-                    int conteo = dato.getConteo() + 1 ;
+            for (Caracter dato : caracteres) {
+                if (dato.getValorCaracter().equals(miCaracter.getValorCaracter())) {
+                    int conteo = dato.getConteo() + 1;
                     dato.setConteo(conteo);
                     contiene = false;
                 }
 
             }
-            if (contiene==true)
-            {
+            if (contiene) {
                 caracteres.add(miCaracter);
-                contiene=true;
             }
         }
         StringBuilder decimales = new StringBuilder();
         StringBuilder ascii = new StringBuilder();
         arbol.AgregarListaNodo(caracteres);
-        arbol.EstructurarArbol();
+        arbol.EstructurarArbol(true);
         String copiar = arbol.TextoEnBits(texto);
-        binarioVentana=copiar;
+        binarioVentana = copiar;
         String textoSeparar = binarioByte(copiar);
         String[] separar = textoSeparar.split("-");
-        for (int j=0;j<separar.length;j++)
-        {
-            if(separar[j].length()==8)
-            {
+        for (int j = 0; j < separar.length; j++) {
+            if (separar[j].length() == 8) {
                 decimales.append(Decimal(separar[j]));
                 decimales.append(",");
-            }
-            else
-            {
-                int faltantes = 8-separar[j].length();
-                for (int m =0;m<faltantes;m++)
-                {
-                    separar[j]=separar[j]+"0";
+            } else {
+                int faltantes = 8 - separar[j].length();
+                for (int m = 0; m < faltantes; m++) {
+                    separar[j] = separar[j] + "0";
 
                 }
                 decimales.append(Decimal(separar[j]));
@@ -67,19 +57,17 @@ public class CaracteresArchivo {
         }
 
         String[] decimal = decimales.toString().split(",");
-        for (int l =0; l<decimal.length;l++)
-        {
+        for (int l = 0; l < decimal.length; l++) {
             ascii.append(ConvertirAscii(Integer.parseInt(decimal[l])));
             ascii.append(",");
 
         }
 
-        pasarAscii= ascii.toString();
+        pasarAscii = ascii.toString();
 
         StringBuilder asciiDesimal2 = new StringBuilder();
         String[] asciiDecimal = ascii.toString().split(",");
-        for (int l =0; l<asciiDecimal.length;l++)
-        {
+        for (int l = 0; l < asciiDecimal.length; l++) {
             int convertido = (int) asciiDecimal[l].charAt(0);
             asciiDesimal2.append(convertido);
             asciiDesimal2.append(",");
@@ -88,35 +76,29 @@ public class CaracteresArchivo {
 
         StringBuilder decimalBinario = new StringBuilder();
         String[] decimalbina = asciiDesimal2.toString().split(",");
-        for (int l =0; l<decimalbina.length;l++)
-        {
+        for (int l = 0; l < decimalbina.length; l++) {
             decimalBinario.append(Integer.toBinaryString(Integer.parseInt(decimalbina[l])));
 
         }
         String binario2 = decimalBinario.toString();
         StringBuilder binarioCAracter = new StringBuilder();
-        String letra2= "";
+        String letra2 = "";
 
-        for (int i=0;i<binario2.length();i++)
-        {
+        for (int i = 0; i < binario2.length(); i++) {
             char letra = binario2.charAt(i);
             boolean bandera = false;
-            if (letra2.equals("")==true)
-            {
+            if (letra2.equals("")) {
                 letra2 = Character.toString(letra);
-                bandera=true;
+                bandera = true;
             }
-            if (bandera==false&&letra2.equals("")==false)
-            {
+            if (!bandera && !letra2.equals("")) {
                 letra2 = letra2 + Character.toString(letra);
             }
-            for (Hashtable.Entry<String,String> entry:arbol.getValorCracter().entrySet())
-            {
+            for (Hashtable.Entry<String, String> entry : arbol.getValorCracter().entrySet()) {
 
-                if (letra2.equals(entry.getValue())==true)
-                {
+                if (letra2.equals(entry.getValue())) {
                     binarioCAracter.append(entry.getKey());
-                    letra2 ="";
+                    letra2 = "";
                     bandera = true;
                 }
 
@@ -127,41 +109,35 @@ public class CaracteresArchivo {
         descomprimir = binarioCAracter.toString();
 
     }
-    public char ConvertirAscii(int leido){
-        return (char)leido;
+
+    public char ConvertirAscii(int leido) {
+        return (char) leido;
     }
 
-    public String binarioByte(String bits)
-    {
+    public String binarioByte(String bits) {
         StringBuilder Byte = new StringBuilder();
-        int contador =1;
-        for (int i=0;i<bits.length();i++)
-        {
+        int contador = 1;
+        for (int i = 0; i < bits.length(); i++) {
 
             char letra = bits.charAt(i);
             String letra2 = Character.toString(letra);
-            if (contador!=8)
-            {
+            if (contador != 8) {
                 Byte.append(letra2);
 
                 contador++;
-            }
-            else
-            {
+            } else {
                 Byte.append(letra2);
                 Byte.append("-");
-                contador=1;
+                contador = 1;
             }
 
         }
         return Byte.toString();
     }
 
-    public String retornoByteAscci(String bits)
-    {
+    public String retornoByteAscci(String bits) {
         StringBuilder textoEnAscci = new StringBuilder();
-        for (int i=0;i<bits.length();i++)
-        {
+        for (int i = 0; i < bits.length(); i++) {
 
             char letra = bits.charAt(i);
 
@@ -169,8 +145,7 @@ public class CaracteresArchivo {
         return textoEnAscci.toString();
     }
 
-    public Long Decimal(String binario)
-    {
+    public Long Decimal(String binario) {
         long numero, aux, digito, decimal;
         int exponente;
         boolean esBinario;
@@ -212,5 +187,18 @@ public class CaracteresArchivo {
 
     public String getBinarioVentana() {
         return binarioVentana;
+    }
+
+    ////////////////////////////////////////////////////
+    private void Descomprimir(String texto) {
+
+        //LEER EL ARCHIVO Y CONTRUIR LA TABLA DE FRECUENCIAS (EJEMPLO: <g,2>
+        //YA TENIENDO LA TABLA
+
+        arbol.AgregarListaNodo(caracteres);
+        arbol.EstructurarArbol(false);
+        String nuevoTexto = arbol.ConvertirAsciiATexto(texto);
+
+        //ESCRIBIR NUEVO TEXTO EN EL ARCHIVO
     }
 }
