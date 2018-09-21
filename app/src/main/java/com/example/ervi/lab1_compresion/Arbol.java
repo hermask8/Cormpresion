@@ -99,8 +99,8 @@ public class Arbol {
             valorCracter.put(cadena, actual.getLlave());
         }
         else{
-            LlenarValorCaracter(actual.getLeft(), cadena + "0");
-            LlenarValorCaracter(actual.getRight(),cadena + "1");
+            LlenarValorCaracterDescomprimir(actual.getLeft(), cadena + "0");
+            LlenarValorCaracterDescomprimir(actual.getRight(),cadena + "1");
         }
     }
 
@@ -130,11 +130,11 @@ public class Arbol {
 
     private String DecimalABinario(int num){
         String binario = "";
-        int cociente;
+        int residuo;
         while(num > 1){
-        num = num%2;
-        cociente = num/2;
-        binario = cociente == 1? "1" + binario:"0" +binario;
+        residuo = num%2;
+        num = num/2;
+        binario = residuo == 1? "1" + binario:"0" +binario;
         }
         binario = num == 1? "1" + binario:"0" +binario;
         while (binario.length() < 8){
