@@ -36,8 +36,7 @@ public class ComprimirVista extends AppCompatActivity {
     Button agregarArchivo;
     Button comprimir;
     TextView tvPath;
-    TextView tvBinario;
-    TextView tvAscii;
+    public static String nombreArchivo;
     CaracteresArchivo miArbol = new CaracteresArchivo();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +155,7 @@ public class ComprimirVista extends AppCompatActivity {
                 Toast.makeText(this,"" + path,Toast.LENGTH_SHORT).show();
 
                 pathArchivo = path;
+                nombreArchivo =path.substring(0,path.indexOf("."));
                 tvPath.setText(path);
 
                 /*
@@ -184,29 +184,12 @@ public class ComprimirVista extends AppCompatActivity {
     }
 
 
-    public void CrearArchivo(String nombre)
-    {
-        try {
-            File nuevaCarpeta = new File(Environment.getExternalStorageDirectory(), "Compresiones");
-            if (!nuevaCarpeta.exists()) {
-                nuevaCarpeta.mkdir();
-            }
-            try {
-                File file = new File(Environment.getExternalStorageDirectory(), "Compresion1.txt");
-                file.createNewFile();
-            } catch (Exception ex) {
-                Toast.makeText(this,"ERROR: " + ex,Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this,"ERROR: " + e,Toast.LENGTH_SHORT).show();
-        }
-    }
+
 
     public void escribirArchivo()
     {
 
-            String prueba = "nombres";
-            String fileName = "Descompresion23.txt";
+            String fileName = nombreArchivo+".huff";
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
             try {
                 FileOutputStream fos = new FileOutputStream(file);

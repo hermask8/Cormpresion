@@ -56,7 +56,7 @@ public class VentanaDescomprimir extends AppCompatActivity {
 
     }
 
-    
+
     private String readText(String input)
     {
         File file = new File(Environment.getExternalStorageDirectory(),input);
@@ -140,7 +140,8 @@ public class VentanaDescomprimir extends AppCompatActivity {
             separarLLaveValor(separar[i]);
         }
 
-        llenarNodos();
+        //Si te lo habia agregado pero no te dije que era jaja va es este pero  ->Ascii agarralo y lo mnadas de paramentro
+        Ascii = Ascii;
     }
 
     public void separarLLaveValor(String Objeto)
