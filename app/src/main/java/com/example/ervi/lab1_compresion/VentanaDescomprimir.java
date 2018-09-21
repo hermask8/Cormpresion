@@ -24,7 +24,7 @@ import java.util.List;
 public class VentanaDescomprimir extends AppCompatActivity {
 
 
-    Arbol miArbol = new Arbol();
+    CaracteresArchivo miArbol = new CaracteresArchivo();
     public static List<Caracter> caracteres = new ArrayList<>();
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
@@ -140,8 +140,6 @@ public class VentanaDescomprimir extends AppCompatActivity {
             separarLLaveValor(separar[i]);
         }
 
-        //Si te lo habia agregado pero no te dije que era jaja va es este pero  ->Ascii agarralo y lo mnadas de paramentro
-        Ascii = Ascii;
     }
 
     public void separarLLaveValor(String Objeto)
@@ -161,9 +159,13 @@ public class VentanaDescomprimir extends AppCompatActivity {
         caracteres.add(miCaracter);
     }
 
-    //Hasta aca empiezo a llenar nodos pero de aqui ya me trabe jajaja
+    //////////////////////////////////////////////////////////////
+    //esto manda a realizar el proceso de descompresión
+
     public void llenarNodos()
     {
-        miArbol.AgregarListaNodo(caracteres);
+        //este método te devuelve un STRING CON EL TEXTO DESCOMPRIMIDO, PARA ESCRIBIRLO EN UN NUEVO ARCHIVO
+
+       String textoDescomprimido = miArbol.Descomprimir(Ascii, caracteres);
     }
 }

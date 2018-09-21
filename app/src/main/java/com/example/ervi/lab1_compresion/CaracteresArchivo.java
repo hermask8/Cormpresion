@@ -199,15 +199,9 @@ public class CaracteresArchivo {
     }
 
     ////////////////////////////////////////////////////
-    private void Descomprimir(String texto) {
-
-        //LEER EL ARCHIVO Y CONTRUIR LA TABLA DE FRECUENCIAS (EJEMPLO: <g,2>
-        //YA TENIENDO LA TABLA
-
-        arbol.AgregarListaNodo(caracteres);
+    public String Descomprimir(String texto, List<Caracter> lista){
+        arbol.AgregarListaNodo(lista);
         arbol.EstructurarArbol(false);
-        String nuevoTexto = arbol.ConvertirAsciiATexto(texto);
-
-        //ESCRIBIR NUEVO TEXTO EN EL ARCHIVO
+        return arbol.ConvertirAsciiATexto(texto);
     }
 }
