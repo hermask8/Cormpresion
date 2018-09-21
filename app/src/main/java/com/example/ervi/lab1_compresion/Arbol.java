@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Arbol {
     List<Nodo> nodos = new ArrayList<>();
-    Hashtable<String,String> valorCracter = new Hashtable<>();
+    public Hashtable<String,String> valorCracter = new Hashtable<>();
     
     public void AgregarListaNodo(List<Caracter> listaCaracter)
     {
@@ -89,7 +89,6 @@ public class Arbol {
     public Hashtable<String, String> getValorCracter() {
         return valorCracter;
     }
-
 
 
 

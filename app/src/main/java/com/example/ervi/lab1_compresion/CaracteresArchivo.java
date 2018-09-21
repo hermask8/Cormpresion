@@ -8,12 +8,12 @@ import java.util.List;
 
 public class CaracteresArchivo {
 
-    private static List<Caracter> caracteres = new ArrayList<>();
+    public static List<Caracter> caracteres = new ArrayList<>();
     private static Arbol arbol = new Arbol();
     public String pasarAscii;
     public String descomprimir;
     public String binarioVentana;
-
+    public Hashtable<String,String> valorCracter2 = new Hashtable<>();
     public void SepararLinea(String texto) {
         for (int i = 0; i < texto.length(); i++) {
             char letra = texto.charAt(i);
@@ -177,6 +177,10 @@ public class CaracteresArchivo {
         return decimal;
     }
 
+    public  List<Caracter> getCaracteres() {
+        return caracteres;
+    }
+
     public String getDescomprimir() {
         return descomprimir;
     }
@@ -187,6 +191,11 @@ public class CaracteresArchivo {
 
     public String getBinarioVentana() {
         return binarioVentana;
+    }
+
+    public Hashtable<String, String> getValorCracter2() {
+        valorCracter2 = arbol.getValorCracter();
+        return valorCracter2;
     }
 
     ////////////////////////////////////////////////////

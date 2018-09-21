@@ -20,10 +20,13 @@ import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Hashtable;
 
 public class ComprimirVista extends AppCompatActivity {
 
@@ -46,10 +49,10 @@ public class ComprimirVista extends AppCompatActivity {
         {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
-        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
         }
         agregarArchivo =(Button) findViewById(R.id.btnAgregarArchivo);
         tvPath =(TextView) findViewById(R.id.tvPath);
@@ -61,9 +64,40 @@ public class ComprimirVista extends AppCompatActivity {
                 performFileSearch();
             }
         });
+        comprimir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                ComprimirArchivo();
+            }
+        });
+
 
     }
 
+    private void saveTextAsFile()
+    {
+        String prueba = "nombres";
+        String fileName = "PruebaEscritura.txt";
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+
+            fos.write(prueba.getBytes());
+            fos.close();
+
+            Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this,"Archivo no encontrado",Toast.LENGTH_SHORT).show();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(this,"ERROR Guardando",Toast.LENGTH_SHORT).show();
+        }
+    }
     private String readText(String input)
     {
         File file = new File(Environment.getExternalStorageDirectory(),input);
@@ -88,11 +122,12 @@ public class ComprimirVista extends AppCompatActivity {
         return text.toString();
     }
 
-    public void ComprimirArchivo(View view)
+    public void ComprimirArchivo()
     {
         try
         {
             miArbol.SepararLinea(readText(pathArchivo));
+            escribirArchivo();
         }
         catch(Exception ex)
         {
@@ -122,6 +157,7 @@ public class ComprimirVista extends AppCompatActivity {
 
                 pathArchivo = path;
                 tvPath.setText(path);
+
                 /*
                 ;
                 tvBinario.setText(miArbol.getBinarioVentana());
@@ -147,6 +183,7 @@ public class ComprimirVista extends AppCompatActivity {
         }
     }
 
+
     public void CrearArchivo(String nombre)
     {
         try {
@@ -167,13 +204,43 @@ public class ComprimirVista extends AppCompatActivity {
 
     public void escribirArchivo()
     {
-        try {
-            OutputStreamWriter escribir = new OutputStreamWriter(openFileOutput("Prueba.txt", Context.MODE_PRIVATE));
-            escribir.write( "Mensaje");
-            escribir.close();
-        } catch (Exception e) {
 
-            Toast.makeText(this, "No se pudo crear el archivo" + e, Toast.LENGTH_LONG).show();
-        }
+            String prueba = "nombres";
+            String fileName = "Descompresion23.txt";
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
+            try {
+                FileOutputStream fos = new FileOutputStream(file);
+
+                for (Caracter caracter: miArbol.getCaracteres())
+                {
+                    if (caracter.getValorCaracter().equals('\n')==true)
+                    {
+                        String guardar = "!n"+","+ String.valueOf(caracter.getConteo());
+                        fos.write(guardar.getBytes());
+                        fos.write("/".getBytes());
+                    }
+                    else
+                    {
+                        String guardar = caracter.getValorCaracter() +","+ String.valueOf(caracter.getConteo());
+                        fos.write(guardar.getBytes());
+                        fos.write("/".getBytes());
+                    }
+                }
+                fos.write("\n".getBytes());
+                fos.write(miArbol.getPasarAscii().getBytes());
+                fos.close();
+                Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+                Toast.makeText(this,"Archivo no encontrado",Toast.LENGTH_SHORT).show();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+                Toast.makeText(this,"ERROR Guardando",Toast.LENGTH_SHORT).show();
+            }
+
+
+
     }
 }

@@ -18,17 +18,22 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class VentanaDescomprimir extends AppCompatActivity {
 
 
-    CaracteresArchivo miArbol = new CaracteresArchivo();
+    Arbol miArbol = new Arbol();
+    public static List<Caracter> caracteres = new ArrayList<>();
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
     private static String pathArchivo;
     Button agregarArchivo;
     Button Descomprimir;
     TextView tvPath;
+    String Caracteres;
+    String Ascii;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,17 +56,7 @@ public class VentanaDescomprimir extends AppCompatActivity {
 
     }
 
-    public void ComprimirArchivo(View view)
-    {
-        try
-        {
-            miArbol.SepararLinea(readText(pathArchivo));
-        }
-        catch(Exception ex)
-        {
-            Toast.makeText(this,"ERROR " + "Agregue un archivo " + ex.getMessage(),Toast.LENGTH_SHORT).show();
-        }
-    }
+    
     private String readText(String input)
     {
         File file = new File(Environment.getExternalStorageDirectory(),input);
@@ -70,10 +65,15 @@ public class VentanaDescomprimir extends AppCompatActivity {
         {
             BufferedReader br = new BufferedReader(new FileReader(file));
             String line;
+            int contador = 1;
             while ((line=br.readLine())!=null)
             {
-                text.append(line);
-                text.append("\n");
+
+                if (contador==1)
+                    Caracteres = line;
+                else
+                    Ascii=line;
+                contador++;
             }
             br.close();
 
@@ -132,4 +132,37 @@ public class VentanaDescomprimir extends AppCompatActivity {
         }
     }
 
+    public void Descomprimir(View view)
+    {
+        String[] separar = Caracteres.split("/");
+        for (int i = 0;i<separar.length;i++)
+        {
+            separarLLaveValor(separar[i]);
+        }
+
+        llenarNodos();
+    }
+
+    public void separarLLaveValor(String Objeto)
+    {
+        String[] objeto = Objeto.split(",");
+        Caracter miCaracter = new Caracter();
+        if (objeto[0].equals("!n"))
+        {
+            miCaracter.setValorCaracter('\n');
+        }
+        else
+        {
+            miCaracter.setValorCaracter(objeto[0].charAt(0));
+        }
+
+        miCaracter.setConteo(Integer.parseInt(objeto[1]));
+        caracteres.add(miCaracter);
+    }
+
+    //Hasta aca empiezo a llenar nodos pero de aqui ya me trabe jajaja
+    public void llenarNodos()
+    {
+        miArbol.AgregarListaNodo(caracteres);
+    }
 }
