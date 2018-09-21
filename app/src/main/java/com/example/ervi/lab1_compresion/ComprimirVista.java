@@ -189,7 +189,7 @@ public class ComprimirVista extends AppCompatActivity {
     public void escribirArchivo()
     {
 
-            String fileName = nombreArchivo+".huff";
+            String fileName = nombreArchivo+"Comprimido.txt";
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
             try {
                 FileOutputStream fos = new FileOutputStream(file);

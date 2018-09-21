@@ -28,10 +28,11 @@ public class VentanaDescomprimir extends AppCompatActivity {
     public static List<Caracter> caracteres = new ArrayList<>();
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
-    private static String pathArchivo;
+    private static String pathArchivo2;
     Button agregarArchivo;
     Button Descomprimir;
     TextView tvPath;
+    TextView tvDescomprimido;
     String Caracteres;
     String Ascii;
     @Override
@@ -45,6 +46,7 @@ public class VentanaDescomprimir extends AppCompatActivity {
         }
         agregarArchivo =(Button) findViewById(R.id.btnBuscarArchivo);
         tvPath =(TextView) findViewById(R.id.tvPathArchivo);
+        tvDescomprimido =(TextView) findViewById(R.id.tvContenidoArchivo);
         Descomprimir = (Button) findViewById(R.id.btnDescomprimir);
         agregarArchivo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +107,7 @@ public class VentanaDescomprimir extends AppCompatActivity {
                 path = path.substring(path.indexOf(":") + 1);
                 Toast.makeText(this,"" + path,Toast.LENGTH_SHORT).show();
 
-                pathArchivo = path;
+                pathArchivo2 = path;
                 tvPath.setText(path);
                 /*
                 ;
@@ -134,11 +136,13 @@ public class VentanaDescomprimir extends AppCompatActivity {
 
     public void Descomprimir(View view)
     {
+        readText(pathArchivo2);
         String[] separar = Caracteres.split("/");
         for (int i = 0;i<separar.length;i++)
         {
             separarLLaveValor(separar[i]);
         }
+        llenarNodos();
 
     }
 
@@ -167,5 +171,6 @@ public class VentanaDescomprimir extends AppCompatActivity {
         //este método te devuelve un STRING CON EL TEXTO DESCOMPRIMIDO, PARA ESCRIBIRLO EN UN NUEVO ARCHIVO
 
        String textoDescomprimido = miArbol.Descomprimir(Ascii, caracteres);
+       tvDescomprimido.setText(textoDescomprimido);
     }
 }
