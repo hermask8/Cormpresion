@@ -1,15 +1,12 @@
 package com.example.ervi.lab1_compresion;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -19,41 +16,31 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 
-public class ComprimirVista extends AppCompatActivity {
+public class VentanaDescomprimir extends AppCompatActivity {
 
+
+    CaracteresArchivo miArbol = new CaracteresArchivo();
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
     private static String pathArchivo;
     Button agregarArchivo;
-    Button comprimir;
+    Button Descomprimir;
     TextView tvPath;
-    TextView tvBinario;
-    TextView tvAscii;
-    CaracteresArchivo miArbol = new CaracteresArchivo();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comprimir_vista);
-
+        setContentView(R.layout.activity_ventana_descomprimir);
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-        != PackageManager.PERMISSION_GRANTED)
+                != PackageManager.PERMISSION_GRANTED)
         {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
-        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED)
-        {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
-        }
-        agregarArchivo =(Button) findViewById(R.id.btnAgregarArchivo);
-        tvPath =(TextView) findViewById(R.id.tvPath);
-        comprimir = (Button) findViewById(R.id.btnComprimir);
+        agregarArchivo =(Button) findViewById(R.id.btnBuscarArchivo);
+        tvPath =(TextView) findViewById(R.id.tvPathArchivo);
+        Descomprimir = (Button) findViewById(R.id.btnDescomprimir);
         agregarArchivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -64,6 +51,17 @@ public class ComprimirVista extends AppCompatActivity {
 
     }
 
+    public void ComprimirArchivo(View view)
+    {
+        try
+        {
+            miArbol.SepararLinea(readText(pathArchivo));
+        }
+        catch(Exception ex)
+        {
+            Toast.makeText(this,"ERROR " + "Agregue un archivo " + ex.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
     private String readText(String input)
     {
         File file = new File(Environment.getExternalStorageDirectory(),input);
@@ -87,19 +85,6 @@ public class ComprimirVista extends AppCompatActivity {
 
         return text.toString();
     }
-
-    public void ComprimirArchivo(View view)
-    {
-        try
-        {
-            miArbol.SepararLinea(readText(pathArchivo));
-        }
-        catch(Exception ex)
-        {
-            Toast.makeText(this,"ERROR " + "Agregue un archivo " + ex.getMessage(),Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private void performFileSearch()
     {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -147,33 +132,4 @@ public class ComprimirVista extends AppCompatActivity {
         }
     }
 
-    public void CrearArchivo(String nombre)
-    {
-        try {
-            File nuevaCarpeta = new File(Environment.getExternalStorageDirectory(), "Compresiones");
-            if (!nuevaCarpeta.exists()) {
-                nuevaCarpeta.mkdir();
-            }
-            try {
-                File file = new File(Environment.getExternalStorageDirectory(), "Compresion1.txt");
-                file.createNewFile();
-            } catch (Exception ex) {
-                Toast.makeText(this,"ERROR: " + ex,Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            Toast.makeText(this,"ERROR: " + e,Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void escribirArchivo()
-    {
-        try {
-            OutputStreamWriter escribir = new OutputStreamWriter(openFileOutput("Prueba.txt", Context.MODE_PRIVATE));
-            escribir.write( "Mensaje");
-            escribir.close();
-        } catch (Exception e) {
-
-            Toast.makeText(this, "No se pudo crear el archivo" + e, Toast.LENGTH_LONG).show();
-        }
-    }
 }

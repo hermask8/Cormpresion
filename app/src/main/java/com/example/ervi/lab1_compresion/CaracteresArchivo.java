@@ -59,12 +59,11 @@ public class CaracteresArchivo {
         String[] decimal = decimales.toString().split(",");
         for (int l = 0; l < decimal.length; l++) {
             ascii.append(ConvertirAscii(Integer.parseInt(decimal[l])));
-            ascii.append(",");
 
         }
 
         pasarAscii = ascii.toString();
-
+/*
         StringBuilder asciiDesimal2 = new StringBuilder();
         String[] asciiDecimal = ascii.toString().split(",");
         for (int l = 0; l < asciiDecimal.length; l++) {
@@ -107,6 +106,7 @@ public class CaracteresArchivo {
 
         }
         descomprimir = binarioCAracter.toString();
+        */
 
     }
 

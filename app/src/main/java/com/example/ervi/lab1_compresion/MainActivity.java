@@ -18,4 +18,10 @@ public class MainActivity extends AppCompatActivity {
         Intent ventanaCompri = new Intent(this,ComprimirVista.class);
         startActivity(ventanaCompri);
     }
+
+    public void ventanaDEscomprimir(View view)
+    {
+        Intent ventanaCompri = new Intent(this,VentanaDescomprimir.class);
+        startActivity(ventanaCompri);
+    }
 }

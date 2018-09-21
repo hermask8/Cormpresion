@@ -4,54 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ComprimirVista">
+    tools:context=".VentanaDescomprimir">
 
     <Button
-        android:id="@+id/btnAgregarArchivo"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnBuscarArchivo"
+        android:layout_width="192dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="88dp"
-        android:text="Agregar Archivo"
+        android:layout_marginTop="104dp"
+        android:text="Buscar Archivo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/btnComprimir"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnDescomprimir"
+        android:layout_width="189dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Descomprimir Archivo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.418"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPathArchivo" />
+
+    <TextView
+        android:id="@+id/tvContenidoArchivo"
+        android:layout_width="286dp"
+        android:layout_height="152dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="20dp"
+        android:text="Contenido Archivo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnDescomprimir" />
+
+    <TextView
+        android:id="@+id/tvPathArchivo"
+        android:layout_width="198dp"
+        android:layout_height="33dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:onClick="ComprimirArchivo"
-        android:text="Comprimir Archivo"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.441"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAgregarArchivo"
-        app:layout_constraintVertical_bias="0.08" />
-
-    <TextView
-        android:id="@+id/tvPath"
-        android:layout_width="129dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnComprimir"
-        app:layout_constraintVertical_bias="0.131" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btnBuscarArchivo"
+        tools:text="Archivo" />
 </android.support.constraint.ConstraintLayout>
