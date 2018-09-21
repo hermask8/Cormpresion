@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class VentanaDescomprimir extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
     private static String pathArchivo2;
+    private static String pathArchivo3;
+    String textoDescomprimido;
     Button agregarArchivo;
     Button Descomprimir;
     TextView tvPath;
@@ -43,6 +47,10 @@ public class VentanaDescomprimir extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED)
         {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
         }
         agregarArchivo =(Button) findViewById(R.id.btnBuscarArchivo);
         tvPath =(TextView) findViewById(R.id.tvPathArchivo);
@@ -109,6 +117,7 @@ public class VentanaDescomprimir extends AppCompatActivity {
 
                 pathArchivo2 = path;
                 tvPath.setText(path);
+                pathArchivo3 =path.substring(0,path.indexOf("."));
                 /*
                 ;
                 tvBinario.setText(miArbol.getBinarioVentana());
@@ -170,7 +179,38 @@ public class VentanaDescomprimir extends AppCompatActivity {
     {
         //este método te devuelve un STRING CON EL TEXTO DESCOMPRIMIDO, PARA ESCRIBIRLO EN UN NUEVO ARCHIVO
 
-       String textoDescomprimido = miArbol.Descomprimir(Ascii, caracteres);
+       textoDescomprimido = miArbol.Descomprimir(Ascii, caracteres);
        tvDescomprimido.setText(textoDescomprimido);
+       escribirArchivo();
     }
+
+
+    public void escribirArchivo()
+    {
+
+        String fileName = pathArchivo3+"Descomprimido.txt";
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+
+            String guardar = textoDescomprimido;
+            fos.write(guardar.getBytes());
+            fos.close();
+            Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
+            }
+
+         catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this,"Archivo no encontrado",Toast.LENGTH_SHORT).show();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(this,"ERROR Guardando",Toast.LENGTH_SHORT).show();
+        }
+
+
+
+    }
+
 }
