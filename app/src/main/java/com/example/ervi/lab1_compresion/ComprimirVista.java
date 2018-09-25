@@ -32,7 +32,7 @@ public class ComprimirVista extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
-    private static String pathArchivo;
+    private  String pathArchivo;
     Button agregarArchivo;
     Button comprimir;
     TextView tvPath;

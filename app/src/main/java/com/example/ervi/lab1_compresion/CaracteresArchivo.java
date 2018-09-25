@@ -8,7 +8,7 @@ import java.util.List;
 
 public class CaracteresArchivo {
 
-    public static List<Caracter> caracteres = new ArrayList<>();
+    public  List<Caracter> caracteres = new ArrayList<>();
     private static Arbol arbol = new Arbol();
     public String pasarAscii;
     public String descomprimir;

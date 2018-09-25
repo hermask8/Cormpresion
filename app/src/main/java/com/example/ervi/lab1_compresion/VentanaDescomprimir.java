@@ -27,11 +27,11 @@ public class VentanaDescomprimir extends AppCompatActivity {
 
 
     CaracteresArchivo miArbol = new CaracteresArchivo();
-    public static List<Caracter> caracteres = new ArrayList<>();
+    public  List<Caracter> caracteres = new ArrayList<>();
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
-    private static String pathArchivo2;
-    private static String pathArchivo3;
+    private  String pathArchivo2;
+    private  String pathArchivo3;
     String textoDescomprimido;
     Button agregarArchivo;
     Button Descomprimir;
@@ -191,11 +191,11 @@ public class VentanaDescomprimir extends AppCompatActivity {
         String fileName = pathArchivo3+"Descomprimido.txt";
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
         try {
-            FileOutputStream fos = new FileOutputStream(file);
+            FileOutputStream fos2 = new FileOutputStream(file);
 
-            String guardar = textoDescomprimido;
-            fos.write(guardar.getBytes());
-            fos.close();
+            String guardar2 = textoDescomprimido;
+            fos2.write(guardar2.getBytes());
+            fos2.close();
             Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
             }
 
