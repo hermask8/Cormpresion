@@ -15,24 +15,25 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class LZWVentana extends AppCompatActivity {
+public class VentanaDescomprimirLzw extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
+    public LZW miDescompresion= new LZW();
+    String pathArchivo;
+    String tabla;
+    String valor;
     Button agregarArchivo;
     Button comprimir;
-    public LZW miCompresion = new LZW();
-    public String pathArchivo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lzwventana);
+        setContentView(R.layout.activity_ventana_descomprimir_lzw);
 
         if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED)
@@ -44,8 +45,9 @@ public class LZWVentana extends AppCompatActivity {
                 != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
         }
-        agregarArchivo =(Button) findViewById(R.id.btnAgregarArchivoLz);
-        comprimir = (Button) findViewById(R.id.btnComprimirLz);
+
+        agregarArchivo =(Button) findViewById(R.id.btnBuscarArchivolz);
+        comprimir = (Button) findViewById(R.id.btnDescomprimirLZW);
         agregarArchivo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -61,7 +63,6 @@ public class LZWVentana extends AppCompatActivity {
 
             }
         });
-
     }
 
     private void performFileSearch() {
@@ -110,17 +111,12 @@ public class LZWVentana extends AppCompatActivity {
     public void escribirArchivo() {
 
 
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"Pureba.txt");
+        readText(pathArchivo);
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"PurebaDesco.txt");
         try {
             FileOutputStream fos2 = new FileOutputStream(file);
-
-            String escribir = miCompresion.ComprimirTabla(readText(pathArchivo));
+            String escribir = miDescompresion.Descomprimir(tabla,valor);
             fos2.write(escribir.getBytes());
-            fos2.write("\n".getBytes());
-            StringBuilder miColeccion = new StringBuilder();
-            String escribir4 = miCompresion.ComprimirTexto(readText(pathArchivo));
-
-            fos2.write(escribir4.getBytes());
             fos2.close();
             Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
         }
@@ -146,22 +142,30 @@ public class LZWVentana extends AppCompatActivity {
         byte[] values = new byte[(int)file.length()];
         StringBuilder text = new StringBuilder();
         try {
-
+            /*
             FileInputStream fileStream = new FileInputStream(file);
 
             fileStream.read(values);
             fileStream.close();
-            /*
+            */
+
             BufferedReader br = new BufferedReader(new FileReader(file));
+
             String line;
             int contador = 1;
             while ((line = br.readLine()) != null) {
-
-               text.append(line);
-                text.append("\n");
+                if (contador==1)
+                {
+                    tabla = line;
+                }
+                else
+                {
+                    valor = line;
+                }
+                contador++;
             }
             br.close();
-            */
+
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -170,48 +174,3 @@ public class LZWVentana extends AppCompatActivity {
         return values.toString();
     }
 }
-/*
-    public void escribirArchivo2()
-    {
-
-        String fileName = "Comprimido.txt";
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-
-            for (Caracter caracter: miArbol.getCaracteres())
-            {
-                if (caracter.getValorCaracter().equals('\n')==true)
-                {
-                    String guardar = "!n"+","+ String.valueOf(caracter.getConteo());
-                    fos.write(guardar.getBytes());
-                    fos.write("/".getBytes());
-                }
-                else
-                {
-                    String guardar = caracter.getValorCaracter() +","+ String.valueOf(caracter.getConteo());
-                    fos.write(guardar.getBytes());
-                    fos.write("/".getBytes());
-                }
-            }
-            fos.write("\n".getBytes());
-            fos.write(miArbol.getPasarAscii().getBytes());
-            fos.close();
-            Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            Toast.makeText(this,"Archivo no encontrado",Toast.LENGTH_SHORT).show();
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-            Toast.makeText(this,"ERROR Guardando",Toast.LENGTH_SHORT).show();
-        }
-
-
-
-    }
-
-*/
-
-
