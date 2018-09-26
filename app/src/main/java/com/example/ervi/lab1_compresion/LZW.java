@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pruebalzw;
+package com.example.ervi.lab1_compresion;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
