@@ -13,14 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".LZWVentana" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>>
+        <activity android:name=".LZWeleccion">
+
         </activity>
-        <activity android:name=".LZWVentana" />
-        <activity android:name=".LZWeleccion"></activity>
     </application>
 
 </manifest>

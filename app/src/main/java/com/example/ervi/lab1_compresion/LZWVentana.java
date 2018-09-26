@@ -9,6 +9,8 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -22,6 +24,8 @@ public class LZWVentana extends AppCompatActivity {
 
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
+    Button agregarArchivo;
+    Button comprimir;
     public LZW miCompresion = new LZW();
     public String pathArchivo;
     @Override
@@ -29,14 +33,33 @@ public class LZWVentana extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lzwventana);
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT>= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED)
+        {
             requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_STORAGE);
         }
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1000);
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1000);
         }
+        agregarArchivo =(Button) findViewById(R.id.btnAgregarArchivoLz);
+        comprimir = (Button) findViewById(R.id.btnComprimirLz);
+        agregarArchivo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                performFileSearch();
+            }
+        });
+        comprimir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                escribirArchivo();
+
+            }
+        });
 
     }
 
@@ -93,7 +116,8 @@ public class LZWVentana extends AppCompatActivity {
             String escribir = miCompresion.ComprimirTabla(readText(pathArchivo));
             fos2.write(escribir.getBytes());
             fos2.write("\n".getBytes());
-            fos2.write((miCompresion.ComprimirTexto(readText(pathArchivo))).getBytes());
+            String escribir4 = miCompresion.ComprimirTexto(readText(pathArchivo));
+            fos2.write(escribir4.getBytes());
             fos2.close();
             Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
         }
