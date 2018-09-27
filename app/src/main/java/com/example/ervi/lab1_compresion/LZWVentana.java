@@ -109,8 +109,8 @@ public class LZWVentana extends AppCompatActivity {
 
     public void escribirArchivo() {
 
-
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"Pureba.lzw");
+        String nombre =pathArchivo.substring(0,pathArchivo.indexOf("."));
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),nombre+".lzw");
         try {
             FileOutputStream fos2 = new FileOutputStream(file);
             StringBuilder miColeccion = new StringBuilder();

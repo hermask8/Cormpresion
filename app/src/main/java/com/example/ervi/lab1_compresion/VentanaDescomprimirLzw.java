@@ -111,12 +111,12 @@ public class VentanaDescomprimirLzw extends AppCompatActivity {
 
     public void escribirArchivo() {
 
-        String nombre =pathArchivo.substring(pathArchivo.indexOf("."));
+        String nombre =pathArchivo.substring(0,pathArchivo.indexOf("."));
         String nuevo = readText(pathArchivo);
         String[] llaveValor = nuevo.split("////");
         tabla = llaveValor[0];
         valor = llaveValor[1];
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"PurebaDesco.txt");
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),nombre +"Descompresolzw.txt");
         try {
             FileOutputStream fos2 = new FileOutputStream(file);
             String escribir = miDescompresion.Descomprimir(tabla,valor);
