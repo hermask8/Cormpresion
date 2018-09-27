@@ -33,6 +33,8 @@ public class ComprimirVista extends AppCompatActivity {
     private static final int PERMISSION_REQUEST_STORAGE = 1000;
     private static final int READ_REQUEST_CODE = 42;
     private  String pathArchivo;
+    private  String pathArchivoCompleto;
+    private String misCompresiones = "Compresiones.txt";
     Button agregarArchivo;
     Button comprimir;
     TextView tvPath;
@@ -127,18 +129,57 @@ public class ComprimirVista extends AppCompatActivity {
         {
             miArbol.SepararLinea(readText(pathArchivo));
             escribirArchivo();
+            Comprimidos();
         }
         catch(Exception ex)
         {
             Toast.makeText(this,"ERROR " + "Agregue un archivo " + ex.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
+    public void Comprimidos()
+    {
+        File file2 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),pathArchivo+"Descomprimido.txt");
+        File file3 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),pathArchivo);
+        String nombre =pathArchivo.substring(0,pathArchivo.indexOf("."));
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),misCompresiones);
+        try {
 
+            FileOutputStream fos2 = new FileOutputStream(file);
+            if (file.exists())
+            {
+                int razon = (int)(file2.length()/file3.length());
+                int porcentaje = (int) ((file2.length()*100)-(file3.length()*100));
+                fos2.write(("\n"+nombre +","+pathArchivoCompleto+","+ razon +"," + "Huffman"+ "," + porcentaje).getBytes());
+            }
+            else
+            {
+
+                int razon = (int)(file2.length()/file3.length());
+                int porcentaje = (int) ((file2.length()*100)-(file3.length()*100));
+                fos2.write((nombre +","+pathArchivoCompleto+","+ razon +"," + "Huffman"+ "," + porcentaje).getBytes());
+                fos2.write(nombre.getBytes());
+            }
+            fos2.close();
+            Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
+        }
+
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(this,"Archivo no encontrado",Toast.LENGTH_SHORT).show();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            Toast.makeText(this,"ERROR Guardando",Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
     private void performFileSearch()
     {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/*");
+        intent.setType("*/*");
         startActivityForResult(intent,READ_REQUEST_CODE);
     }
 
@@ -151,9 +192,9 @@ public class ComprimirVista extends AppCompatActivity {
             {
                 Uri uri = data.getData();
                 String path = uri.getPath();
+                pathArchivoCompleto = path;
                 path = path.substring(path.indexOf(":") + 1);
                 Toast.makeText(this,"" + path,Toast.LENGTH_SHORT).show();
-
                 pathArchivo = path;
                 nombreArchivo =path.substring(0,path.indexOf("."));
                 tvPath.setText(path);
@@ -189,7 +230,7 @@ public class ComprimirVista extends AppCompatActivity {
     public void escribirArchivo()
     {
 
-            String fileName = nombreArchivo+"Comprimido.txt";
+            String fileName = nombreArchivo+".huff";
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),fileName);
             try {
                 FileOutputStream fos = new FileOutputStream(file);

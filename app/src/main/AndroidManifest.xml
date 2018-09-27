@@ -12,26 +12,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <activity android:name=".LZWVentana">
-
-        </activity>
-
-        <activity android:name=".LZWeleccion">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LZWVentana" />
+        <activity android:name=".LZWeleccion"></activity>
+        <activity android:name=".VentanaDescomprimirLzw" />
+        <activity android:name=".ComprimirVista" />
+        <activity android:name=".VentanaDescomprimir" />
+        <activity android:name=".VentanaEleccionCompresion">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity android:name=".VentanaDescomprimirLzw">
-
-        </activity>
-=======
-        <activity android:name=".ComprimirVista" />
-        <activity android:name=".VentanaDescomprimir"></activity>
->>>>>>> serie1
+        <activity android:name=".MisCompresiones"></activity>
     </application>
 
 </manifest>
