@@ -10,12 +10,14 @@ public class VentanaEleccionCompresion extends AppCompatActivity {
 
     Button BotonHuffman;
     Button BotonLZW;
+    Button botonCompresiones;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_eleccion_compresion);
         BotonHuffman=(Button) findViewById(R.id.btnHuffman);
         BotonLZW= (Button) findViewById(R.id.btnLZW);
+        botonCompresiones= (Button) findViewById(R.id.btnLZW);
         BotonHuffman.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -30,6 +32,13 @@ public class VentanaEleccionCompresion extends AppCompatActivity {
                 cambioLZW();
             }
         });
+        botonCompresiones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                cambioCompresiones();
+            }
+        });
     }
 
     public void cambioHuffman()
@@ -41,5 +50,10 @@ public class VentanaEleccionCompresion extends AppCompatActivity {
     {
         Intent ventanaLZW = new Intent(this,LZWeleccion.class);
         startActivity(ventanaLZW);
+    }
+    public void cambioCompresiones()
+    {
+        Intent ventanaCompresiones = new Intent(this,VentanaEleccionCompresion.class);
+        startActivity(ventanaCompresiones);
     }
 }

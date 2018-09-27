@@ -34,7 +34,8 @@ public class ComprimirVista extends AppCompatActivity {
     private static final int READ_REQUEST_CODE = 42;
     private  String pathArchivo;
     private  String pathArchivoCompleto;
-    private String misCompresiones = "Compresiones.txt";
+    public static String misCompresiones = "Compresiones.txt";
+    public static File file6 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),misCompresiones);
     Button agregarArchivo;
     Button comprimir;
     TextView tvPath;
@@ -141,25 +142,41 @@ public class ComprimirVista extends AppCompatActivity {
         File file2 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),pathArchivo+"Descomprimido.txt");
         File file3 = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),pathArchivo);
         String nombre =pathArchivo.substring(0,pathArchivo.indexOf("."));
-        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),misCompresiones);
-        try {
 
-            FileOutputStream fos2 = new FileOutputStream(file);
-            if (file.exists())
+
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file6));
+            if (file6.exists())
             {
+
+
+                FileOutputStream fos2 = new FileOutputStream(file6);
+                StringBuilder text = new StringBuilder();
+
+                    String line = br.readLine();
+                    int contador = 1;
+                    while (line!=null)
+                    {
+                        fos2.write(line.getBytes());
+                        fos2.write('\n');
+                    }
+                    br.close();
                 int razon = (int)(file2.length()/file3.length());
                 int porcentaje = (int) ((file2.length()*100)-(file3.length()*100));
-                fos2.write(("\n"+nombre +","+pathArchivoCompleto+","+ razon +"," + "Huffman"+ "," + porcentaje).getBytes());
+                fos2.write((nombre +","+pathArchivoCompleto+","+ razon +"," + "Huffman"+ "," + porcentaje).getBytes());
+                fos2.close();
             }
             else
             {
-
+                FileOutputStream fos2 = new FileOutputStream(file6);
                 int razon = (int)(file2.length()/file3.length());
                 int porcentaje = (int) ((file2.length()*100)-(file3.length()*100));
                 fos2.write((nombre +","+pathArchivoCompleto+","+ razon +"," + "Huffman"+ "," + porcentaje).getBytes());
                 fos2.write(nombre.getBytes());
+                fos2.close();
             }
-            fos2.close();
+
             Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
         }
 
