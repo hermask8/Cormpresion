@@ -69,7 +69,7 @@ public class VentanaDescomprimirLzw extends AppCompatActivity {
     private void performFileSearch() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/*");
+        intent.setType("*/*");
         startActivityForResult(intent, READ_REQUEST_CODE);
     }
 
@@ -111,7 +111,7 @@ public class VentanaDescomprimirLzw extends AppCompatActivity {
 
     public void escribirArchivo() {
 
-
+        String nombre =pathArchivo.substring(pathArchivo.indexOf("."));
         String nuevo = readText(pathArchivo);
         String[] llaveValor = nuevo.split("////");
         tabla = llaveValor[0];
