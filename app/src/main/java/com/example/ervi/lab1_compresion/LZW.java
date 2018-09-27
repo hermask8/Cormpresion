@@ -58,10 +58,7 @@ public class LZW {
         String tabla = "";
         for (int i = 0; i < CaracteresDistintos.size(); i++){
             diccionarioCaracteres.put(CaracteresDistintos.get(i).toString(), (char)(i+1) + "");
-            if (i != 0){
-                tabla+= ",";
-            }
-            tabla+= CaracteresDistintos.get(i) + "|" + (char)(i+1);
+            tabla+= CaracteresDistintos.get(i);
         }
         return tabla;
     }
@@ -102,9 +99,8 @@ public class LZW {
 
 
     public String Descomprimir(String tabla, String texto){
-        String[] PartirTabla = tabla.split(",");
-        for (int i = 0; i < PartirTabla.length; i++){
-            diccionarioCaracteres.put(PartirTabla[i].charAt(2) + "", PartirTabla[i].charAt(0) + "");
+        for (int i = 0; i < tabla.length(); i++){
+            diccionarioCaracteres.put ((char)(i+1) + "", tabla.charAt(i) + "");
         }
         String textoDescomprimido = "";
         String anterior = "";       

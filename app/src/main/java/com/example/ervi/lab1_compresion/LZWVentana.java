@@ -113,13 +113,12 @@ public class LZWVentana extends AppCompatActivity {
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"Pureba.txt");
         try {
             FileOutputStream fos2 = new FileOutputStream(file);
-
+            StringBuilder miColeccion = new StringBuilder();
             String escribir = miCompresion.ComprimirTabla(readText(pathArchivo));
             fos2.write(escribir.getBytes());
-            fos2.write("\n".getBytes());
-            StringBuilder miColeccion = new StringBuilder();
+            fos2.write("////".getBytes());
             String escribir4 = miCompresion.ComprimirTexto(readText(pathArchivo));
-
+            StringBuilder miColeccion2 = new StringBuilder();
             fos2.write(escribir4.getBytes());
             fos2.close();
             Toast.makeText(this,"Guardado",Toast.LENGTH_SHORT).show();
@@ -141,33 +140,29 @@ public class LZWVentana extends AppCompatActivity {
 
 
     private String readText(String input) {
-
+        String content= "";
         File file = new File(Environment.getExternalStorageDirectory(), input);
         byte[] values = new byte[(int)file.length()];
         StringBuilder text = new StringBuilder();
         try {
-
+            /*
             FileInputStream fileStream = new FileInputStream(file);
 
             fileStream.read(values);
             fileStream.close();
-            /*
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-            int contador = 1;
-            while ((line = br.readLine()) != null) {
-
-               text.append(line);
-                text.append("\n");
-            }
-            br.close();
             */
+            FileInputStream fileStream = new FileInputStream(file);
+
+            fileStream.read(values);
+            fileStream.close();
+            content = new String(values,"UTF-8");
+            return content;
 
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        return values.toString();
+        return content;
     }
 }
 /*

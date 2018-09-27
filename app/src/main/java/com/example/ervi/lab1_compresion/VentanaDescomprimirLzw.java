@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -111,7 +112,10 @@ public class VentanaDescomprimirLzw extends AppCompatActivity {
     public void escribirArchivo() {
 
 
-        readText(pathArchivo);
+        String nuevo = readText(pathArchivo);
+        String[] llaveValor = nuevo.split("////");
+        tabla = llaveValor[0];
+        valor = llaveValor[1];
         File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"PurebaDesco.txt");
         try {
             FileOutputStream fos2 = new FileOutputStream(file);
@@ -142,30 +146,57 @@ public class VentanaDescomprimirLzw extends AppCompatActivity {
         byte[] values = new byte[(int)file.length()];
         StringBuilder text = new StringBuilder();
         try {
-            /*
+
             FileInputStream fileStream = new FileInputStream(file);
 
             fileStream.read(values);
             fileStream.close();
-            */
-
+            String content = new String(values,"UTF-8");
+            /*
             BufferedReader br = new BufferedReader(new FileReader(file));
-
+            StringBuilder miColeccion2 = new StringBuilder();
             String line;
             int contador = 1;
+
             while ((line = br.readLine()) != null) {
+
+                miColeccion2.append(line);
+
                 if (contador==1)
                 {
-                    tabla = line;
+                    for (int i = 0; i<line.length();i++)
+                    {
+                        if ("/".equals(String.valueOf(line.charAt(i))))
+                        {
+                            if (String.valueOf(line.charAt(i+1)).equals("n"))
+                            {
+                                i++;
+                                miColeccion2.append("\n");
+                            }
+                            else
+                            {
+                                miColeccion2.append(line.charAt(i));
+                            }
+
+                        }
+                        else
+                        {
+                            miColeccion2.append(line.charAt(i));
+                        }
+                    }
+                    tabla = miColeccion2.toString();
                 }
                 else
                 {
                     valor = line;
                 }
+
                 contador++;
             }
-            br.close();
 
+            br.close();
+            */
+            return  content;
 
         } catch (IOException ex) {
             ex.printStackTrace();
