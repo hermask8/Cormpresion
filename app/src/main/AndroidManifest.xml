@@ -24,9 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
         <activity android:name=".VentanaDescomprimirLzw">
 
         </activity>
+=======
+        <activity android:name=".ComprimirVista" />
+        <activity android:name=".VentanaDescomprimir"></activity>
+>>>>>>> serie1
     </application>
 
 </manifest>
